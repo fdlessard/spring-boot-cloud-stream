@@ -14,7 +14,7 @@ logging:
   level.root: INFO
   #  level.org.hibernate.SQL: DEBUG
   level.liquibase: INFO
-  level.io.fdlessard.codebites.kafka: DEBUG
+  level.io.fdlessard.codebites.cloud.stream: DEBUG
 
 spring:
   application:
