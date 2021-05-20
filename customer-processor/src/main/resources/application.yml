@@ -36,7 +36,7 @@ spring:
     password: ${POSTGRES_PASSWORD:secret}
     platform: postgres
     driverClassName: org.postgresql.Driver
-    url: jdbc:postgresql://${POSTGRES_HOST:localhost}:5432/${POSTGRES_DB:postgres}
+    url: jdbc:postgresql://localhost:5432/postgres
     initialization-mode: never
   jpa:
     database-platform: org.hibernate.dialect.PostgreSQL10Dialect
@@ -50,12 +50,16 @@ spring:
       jdbc:
         time_zone: UTC
     show-sql: true
+  kafka:
+    bootstrap-servers: kafka-server:9092
   cloud:
     stream:
       bindings:
         receiveCustomer-in-0:
           destination: customers
+          contentType: application/json
         receiveAddress-in-0:
           destination: addresses
+          contentType: application/json
     function:
       definition: receiveCustomer;receiveAddress

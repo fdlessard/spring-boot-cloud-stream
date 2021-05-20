@@ -38,7 +38,6 @@ public class CustomerProcessorApplication {
     return address -> {
       logger.info("Received Address: {}", address);
       addressService.createAddress(address);
-
     };
   }
 

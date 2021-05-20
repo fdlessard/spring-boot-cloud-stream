@@ -10,3 +10,13 @@ https://www.youtube.com/watch?v=eo8pSWpj2os
 
 
 https://developer.confluent.io/
+
+
+
+
+https://www.confluent.io/blog/kafka-client-cannot-connect-to-broker-on-aws-on-docker-etc/
+
+
+docker-compose build
+docker-compose up
+
