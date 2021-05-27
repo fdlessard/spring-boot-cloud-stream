@@ -1,5 +1,5 @@
 server:
-  port: 8081
+  port: 8080
 
 management:
   info:
@@ -14,11 +14,13 @@ logging:
   level.root: INFO
   #  level.org.hibernate.SQL: DEBUG
   level.liquibase: INFO
-  level.io.fdlessard.codebites.cloud.stream.processor: DEBUG
+  level.io.fdlessard.codebites.cloud.stream.api: DEBUG
 
 spring:
   application:
-    name: customer-processor-application
+    name: customer-api-integration
+  main:
+    banner-mode: "off"
   output:
     ansi:
       enabled: always
@@ -32,12 +34,13 @@ spring:
     serialization:
       write_dates_as_timestamps: false
   datasource:
-    username: ${POSTGRES_USER:postgres}
-    password: ${POSTGRES_PASSWORD:secret}
-    platform: postgres
-    driverClassName: org.postgresql.Driver
-    url: jdbc:postgresql://localhost:5432/postgres
-    initialization-mode: never
+    url: jdbc:tc:postgresql:13:///
+    initialization-mode: always
+  liquibase:
+    enabled: on
+    drop-first: on
+    default-schema: public
+    change-log: classpath:/db/changelog/db.changelog-master.yaml
   jpa:
     database-platform: org.hibernate.dialect.PostgreSQL10Dialect
     hibernate:
@@ -51,17 +54,13 @@ spring:
         time_zone: UTC
     show-sql: true
   kafka:
-    bootstrap-servers: kafka-server:9092
+    bootstrap-servers: localhost:9093
   cloud:
     stream:
       bindings:
-        receiveCustomer-in-0:
+        customer-out-0:
+          contentType: application/json
           destination: customers
-          group: customerGroup
+        address-out-0:
           contentType: application/json
-        receiveAddress-in-0:
           destination: addresses
-          group: addressGroup
-          contentType: application/json
-    function:
-      definition: receiveCustomer;receiveAddress
