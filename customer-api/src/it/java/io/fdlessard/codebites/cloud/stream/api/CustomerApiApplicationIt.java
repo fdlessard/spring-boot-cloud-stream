@@ -6,10 +6,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 @SpringBootTest
 class CustomerApiApplicationIt extends BaseIt {
 
-
   @Test
   public void contextLoads() {
   }
-
 
 }
