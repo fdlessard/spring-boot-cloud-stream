@@ -1,4 +1,4 @@
-package io.fdlessard.codebites.cloud.stream.api;
+package io.fdlessard.codebites.cloud.stream.processor;
 
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -21,7 +21,7 @@ public abstract class BaseIt {
 
   protected MockMvc mockMvc;
 
-  public static KafkaContainer kafkaContainer = CustomerApiKafkaContainer.getInstance();
+  public static KafkaContainer kafkaContainer = CustomerProcessorKafkaContainer.getInstance();
 
   @DynamicPropertySource
   static void registerKafkaProperties(DynamicPropertyRegistry registry) {

@@ -9,29 +9,29 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import io.fdlessard.codebites.cloud.stream.api.model.Customer;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
+import java.nio.charset.StandardCharsets;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.kafka.clients.consumer.Consumer;
-import org.apache.kafka.clients.consumer.ConsumerRecords;
-import org.apache.kafka.common.serialization.StringDeserializer;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.cloud.stream.binder.test.OutputDestination;
+import org.springframework.cloud.stream.binder.test.TestChannelBinderConfiguration;
+import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
-import org.springframework.kafka.core.DefaultKafkaConsumerFactory;
-import org.springframework.kafka.support.serializer.JsonDeserializer;
-import org.springframework.kafka.test.utils.KafkaTestUtils;
+import org.springframework.messaging.Message;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 @Slf4j
 @SpringBootTest
+@Import(TestChannelBinderConfiguration.class)
 @ExtendWith( {SpringExtension.class})
 public class CustomerIt extends BaseIt {
+
+  @Autowired
+  private OutputDestination outputDestination;
 
   @BeforeEach
   void setup() {
@@ -55,11 +55,15 @@ public class CustomerIt extends BaseIt {
         .content(buildJsonStringClient()))
         .andExpect(status().is2xxSuccessful());
 
-    Consumer<String, Customer> customerConsumer = createCustomerConsumer("customers", "customerGroup");
-    List<Customer> customers = consumeCustomer(customerConsumer);
-    assertNotNull(customers);
-    assertEquals(1, customers.size());
-    Customer customer = customers.get(0);
+    Message<byte[]> outputMessage = outputDestination.receive(5000, "customers");
+    String s = new String(outputMessage.getPayload(), StandardCharsets.UTF_8);
+    assertNotNull(s);
+    Customer customer = TestUtils.stringToPojo(s, Customer.class);
+    assertCustomer(customer);
+  }
+
+  static void assertCustomer(Customer customer) {
+    assertNotNull(customer);
     assertEquals("firstName", customer.getFirstName());
     assertEquals("lastName", customer.getLastName());
     assertEquals("company", customer.getCompany());
@@ -67,32 +71,6 @@ public class CustomerIt extends BaseIt {
 
   static String buildJsonStringClient() {
     return TestUtils.readFileIntoString("/Customer.json");
-  }
-
-  private Consumer<String, Customer> createCustomerConsumer(String topicName, String group) {
-
-    Map<String, Object> kafkaConsumerProperties = KafkaTestUtils.consumerProps(
-        kafkaContainer.getBootstrapServers(),
-        group,
-        "true"
-    );
-
-    Consumer<String, Customer> consumer = new DefaultKafkaConsumerFactory<String, Customer>(
-        kafkaConsumerProperties,
-        new StringDeserializer(),
-        new JsonDeserializer<>(Customer.class)
-    ).createConsumer();
-    consumer.subscribe(Collections.singletonList(topicName));
-
-    return consumer;
-  }
-
-  public List<Customer> consumeCustomer(Consumer<String, Customer> customerConsumer) {
-    ConsumerRecords<String, Customer> customerRecords = KafkaTestUtils.getRecords(customerConsumer, 5000);
-    List<Customer> customerValues = new ArrayList<>();
-    customerRecords.forEach(customerRecord -> customerValues.add(customerRecord.value()));
-
-    return customerValues;
   }
 
 }

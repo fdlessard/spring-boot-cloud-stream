@@ -1,6 +1,6 @@
 package io.fdlessard.codebites.cloud.stream.processor.model;
 
-import static io.fdlessard.codebites.cloud.stream.processor.model.CustomerTest.buildCustomer;
+import static io.fdlessard.codebites.cloud.stream.processor.CustomerTestUtils.buildCustomer;
 import static org.junit.jupiter.api.Assertions.*;
 
 import com.fasterxml.jackson.databind.JsonNode;
@@ -14,9 +14,9 @@ import javax.validation.ValidatorFactory;
 import javax.validation.groups.Default;
 import nl.jqno.equalsverifier.EqualsVerifier;
 import nl.jqno.equalsverifier.Warning;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.junit.jupiter.api.Test;
-import org.testcontainers.shaded.org.apache.commons.lang.RandomStringUtils;
 
 class AddressTest {
 

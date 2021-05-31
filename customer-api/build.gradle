@@ -1,5 +1,5 @@
 plugins {
-    id 'org.springframework.boot' version '2.4.5'
+    id 'org.springframework.boot' version '2.4.6'
     id 'io.spring.dependency-management' version '1.0.11.RELEASE'
     id 'java'
     id 'idea'    // optional, for IntelliJ IDEA project
@@ -68,11 +68,18 @@ dependencies {
     integrationTestAnnotationProcessor 'org.projectlombok:lombok'
     integrationTestImplementation 'org.projectlombok:lombok'
     integrationTestImplementation 'org.springframework.boot:spring-boot-starter-test'
-    integrationTestImplementation 'org.springframework.kafka:spring-kafka-test'
+
+    integrationTestImplementation("org.springframework.cloud:spring-cloud-stream") {
+        artifact {
+            name = "spring-cloud-stream"
+            extension = "jar"
+            type ="test-jar"
+            classifier = "test-binder"
+        }
+    }
     integrationTestImplementation 'org.testcontainers:junit-jupiter'
     integrationTestImplementation 'org.testcontainers:kafka'
     integrationTestImplementation 'org.testcontainers:postgresql'
-
 }
 
 dependencyManagement {
@@ -105,7 +112,6 @@ spotbugs {
 jacoco {
     toolVersion = jacocoToolVersion
 }
-
 
 jacocoTestCoverageVerification {
     violationRules {
