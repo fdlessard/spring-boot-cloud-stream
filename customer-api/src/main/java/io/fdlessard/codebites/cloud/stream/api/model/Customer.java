@@ -1,18 +1,18 @@
 package io.fdlessard.codebites.cloud.stream.api.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.experimental.SuperBuilder;
-
+import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
-import java.util.List;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
 @Table(name = "customer", schema = "public")
 @Entity
@@ -22,21 +22,25 @@ import java.util.List;
 @NoArgsConstructor
 public class Customer extends BaseEntity {
 
-    @NotBlank(message = "lastName name cannot be blank")
-    @Size(min = 2, message = "lastName must have more thant 2 characters")
-    private String lastName;
+  @NotBlank(message = "lastName name cannot be blank")
+  @Size(min = 2, message = "lastName must have more thant 2 characters")
+  private String lastName;
 
-    @NotBlank(message = "firstName name cannot be blank")
-    @Size(min = 2, message = "firstName must have more thant 2 characters")
-    private String firstName;
+  @NotBlank(message = "firstName name cannot be blank")
+  @Size(min = 2, message = "firstName must have more thant 2 characters")
+  private String firstName;
 
-    @NotBlank(message = "company name cannot be blank")
-    @Size(min = 2, message = "company must have more thant 2 characters")
-    private String company;
+  @NotBlank(message = "company name cannot be blank")
+  @Size(min = 2, message = "company must have more thant 2 characters")
+  private String company;
 
-    @Valid
-    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
-    private List<Address> addresses;
+  @Valid
+  @OneToMany(
+      cascade = CascadeType.ALL,
+      orphanRemoval = true
+  )
+  @JoinColumn(name = "customerId")
+  private Set<Address> addresses;
 
 }
 

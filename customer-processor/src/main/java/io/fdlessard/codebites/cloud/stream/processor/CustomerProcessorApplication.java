@@ -1,8 +1,6 @@
 package io.fdlessard.codebites.cloud.stream.processor;
 
-import io.fdlessard.codebites.cloud.stream.processor.model.Address;
 import io.fdlessard.codebites.cloud.stream.processor.model.Customer;
-import io.fdlessard.codebites.cloud.stream.processor.services.AddressService;
 import io.fdlessard.codebites.cloud.stream.processor.services.CustomerService;
 import java.util.function.Consumer;
 import lombok.extern.slf4j.Slf4j;
@@ -18,9 +16,6 @@ public class CustomerProcessorApplication {
   @Autowired
   private CustomerService customerService;
 
-  @Autowired
-  private AddressService addressService;
-
   public static void main(String[] args) {
     SpringApplication.run(CustomerProcessorApplication.class, args);
   }
@@ -30,14 +25,6 @@ public class CustomerProcessorApplication {
     return customer -> {
       logger.info("Received Customer: {}", customer);
       customerService.createCustomer(customer);
-    };
-  }
-
-  @Bean
-  Consumer<Address> receiveAddress() {
-    return address -> {
-      logger.info("Received Address: {}", address);
-      addressService.createAddress(address);
     };
   }
 

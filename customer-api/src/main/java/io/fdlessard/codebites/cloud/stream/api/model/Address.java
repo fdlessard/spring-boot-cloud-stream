@@ -18,8 +18,10 @@ import java.io.Serializable;
 @NoArgsConstructor
 public class Address extends BaseEntity implements Serializable {
 
+    @JoinColumn(name="customer_id")
+    private Long customerId;
+
     @NotBlank(message = "number name cannot be blank")
-    @Size(min = 2, message = "number must have more thant 2 characters")
     @Column(name = "number")
     private String number;
 
@@ -48,7 +50,4 @@ public class Address extends BaseEntity implements Serializable {
     @Column(name = "country")
     private String country;
 
-    @ManyToOne
-    @JoinColumn(name="customer_id")
-    private Customer customer;
 }

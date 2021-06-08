@@ -50,9 +50,9 @@ public class CustomerIt extends BaseIt {
   @Test
   void createCustomer() throws Exception {
 
-    mockMvc.perform(post("/customers")
+    mockMvc.perform(post("/asynchronous-customers")
         .contentType(MediaType.APPLICATION_JSON)
-        .content(buildJsonStringClient()))
+        .content(buildJsonStringCustomer()))
         .andExpect(status().is2xxSuccessful());
 
     Message<byte[]> outputMessage = outputDestination.receive(5000, "customers");
@@ -69,7 +69,7 @@ public class CustomerIt extends BaseIt {
     assertEquals("company", customer.getCompany());
   }
 
-  static String buildJsonStringClient() {
+  static String buildJsonStringCustomer() {
     return TestUtils.readFileIntoString("/Customer.json");
   }
 

@@ -8,6 +8,7 @@ import io.fdlessard.codebites.cloud.stream.api.TestUtils;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import javax.validation.ConstraintViolation;
@@ -157,12 +158,12 @@ class CustomerTest {
   }
 
   @Test
-  void validateAddressesList() {
+  void validateAddressesSet() {
 
     Customer customer = buildCustomer();
     Address address = buildAddress();
     address.setProvince("i");
-    List<Address> addresses = new ArrayList<>();
+    Set<Address> addresses = new HashSet<>();
     addresses.add(address);
     customer.setAddresses(addresses);
 
@@ -170,7 +171,7 @@ class CustomerTest {
         .validate(customer, Default.class);
 
     long violationsCount = TestUtils.getViolationsCount(violationSet,
-        "province must have more thant 2 characters", "addresses[0].province");
+        "province must have more thant 2 characters", "addresses[].province");
     assertEquals(1, violationsCount);
   }
 

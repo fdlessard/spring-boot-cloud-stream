@@ -1,7 +1,8 @@
 package io.fdlessard.codebites.cloud.stream.processor.model;
 
 import static io.fdlessard.codebites.cloud.stream.processor.CustomerTestUtils.buildCustomer;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import io.fdlessard.codebites.cloud.stream.processor.TestUtils;
@@ -70,19 +71,6 @@ class AddressTest {
   }
 
   @Test
-  void validateNumberMinSize() {
-
-    Address address = buildAddress();
-    address.setNumber("a");
-
-    Set<ConstraintViolation<Address>> violationSet = validator.validate(address, Default.class);
-
-    long violationsCount = TestUtils.getViolationsCount(violationSet,
-        "number must have more thant 2 characters", TEST_NUMBER_STR);
-    assertEquals(1, violationsCount);
-  }
-
-  @Test
   void validateStreetNotBlank() {
 
     Address address = buildAddress();
@@ -101,19 +89,6 @@ class AddressTest {
     violationsCount = TestUtils.getViolationsCount(violationSet,
         "street name cannot be blank", TEST_STREET_STR);
 
-    assertEquals(1, violationsCount);
-  }
-
-  @Test
-  void validateStreetMinSize() {
-
-    Address address = buildAddress();
-    address.setStreet("a");
-
-    Set<ConstraintViolation<Address>> violationSet = validator.validate(address, Default.class);
-
-    long violationsCount = TestUtils.getViolationsCount(violationSet,
-        "street must have more thant 2 characters", TEST_STREET_STR);
     assertEquals(1, violationsCount);
   }
 

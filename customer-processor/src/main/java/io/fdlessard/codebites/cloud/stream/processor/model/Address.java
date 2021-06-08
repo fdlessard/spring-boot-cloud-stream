@@ -4,7 +4,6 @@ import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
@@ -21,37 +20,36 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 public class Address extends BaseEntity implements Serializable {
 
-    @NotBlank(message = "number name cannot be blank")
-    @Size(min = 2, message = "number must have more thant 2 characters")
-    @Column(name = "number")
-    private String number;
+  @JoinColumn(name = "customer_id")
+  private Long customerId;
 
-    @NotBlank(message = "street name cannot be blank")
-    @Size(min = 2, message = "street must have more thant 2 characters")
-    @Column(name = "street")
-    private String street;
+  @NotBlank(message = "number name cannot be blank")
+  @Column(name = "number")
+  private String number;
 
-    @NotBlank(message = "city name cannot be blank")
-    @Size(min = 2, message = "city must have more thant 2 characters")
-    @Column(name = "city")
-    private String city;
+  @NotBlank(message = "street name cannot be blank")
+  @Size(min = 2, message = "street must have more thant 2 characters")
+  @Column(name = "street")
+  private String street;
 
-    @NotBlank(message = "postalCode name cannot be blank")
-    @Size(min = 2, message = "postalCode must have more thant 2 characters")
-    @Column(name = "postal_code")
-    private String postalCode;
+  @NotBlank(message = "city name cannot be blank")
+  @Size(min = 2, message = "city must have more thant 2 characters")
+  @Column(name = "city")
+  private String city;
 
-    @NotBlank(message = "province name cannot be blank")
-    @Size(min = 2, message = "province must have more thant 2 characters")
-    @Column(name = "province")
-    private String province;
+  @NotBlank(message = "postalCode name cannot be blank")
+  @Size(min = 2, message = "postalCode must have more thant 2 characters")
+  @Column(name = "postal_code")
+  private String postalCode;
 
-    @NotBlank(message = "country name cannot be blank")
-    @Size(min = 2, message = "country must have more thant 2 characters")
-    @Column(name = "country")
-    private String country;
+  @NotBlank(message = "province name cannot be blank")
+  @Size(min = 2, message = "province must have more thant 2 characters")
+  @Column(name = "province")
+  private String province;
 
-    @ManyToOne
-    @JoinColumn(name="customer_id")
-    private Customer customer;
+  @NotBlank(message = "country name cannot be blank")
+  @Size(min = 2, message = "country must have more thant 2 characters")
+  @Column(name = "country")
+  private String country;
+
 }
