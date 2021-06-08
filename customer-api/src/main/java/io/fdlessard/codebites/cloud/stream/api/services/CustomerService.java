@@ -2,10 +2,12 @@ package io.fdlessard.codebites.cloud.stream.api.services;
 
 import io.fdlessard.codebites.cloud.stream.api.model.Customer;
 import io.fdlessard.codebites.cloud.stream.api.repositories.CustomerRepository;
-import liquibase.pro.packaged.C;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cloud.stream.function.StreamBridge;
+import org.springframework.messaging.Message;
+
+import org.springframework.messaging.support.MessageBuilder;
 import org.springframework.stereotype.Service;
 
 @Slf4j
@@ -26,19 +28,33 @@ public class CustomerService {
 
   public void createAsynchronousCustomer(Customer customer) {
     logger.info("CustomerService.createAsynchronousCustomer - {}", customer);
-    logger.info("Sending customer: {}", customer);
+
+    Message<Customer> customerMessage = MessageBuilder.withPayload(customer)
+        .setHeader("type", "Customer")
+        .setHeader("action", "Create")
+        .build();
+
     streamBridge.send(CUSTOMER_BINDING_NAME, customer);
   }
+
+  public void updateAsynchronousCustomer(Customer customer) {
+    logger.info("CustomerService.updateAsynchronousCustomer - {}", customer);
+
+    Message<Customer> customerMessage = MessageBuilder.withPayload(customer)
+        .setHeader("type", "Customer")
+        .setHeader("action", "Update")
+        .build();
+
+    streamBridge.send(CUSTOMER_BINDING_NAME, customerMessage);
+  }
+
 
   public Customer createCustomer(Customer customer) {
     logger.info("CustomerService.createCustomer - {}", customer);
-    logger.info("Create customer: {}", customer);
-    return customerRepository.save(customer);
-  }
+    Customer createdCustomer = customerRepository.save(customer);
+    logger.info("CustomerService.createCustomer - createdCustomer : {}", customer);
 
-  public void updateCustomer(Customer customer) {
-    logger.info("Updating customer: {}", customer);
-    streamBridge.send(CUSTOMER_BINDING_NAME, customer);
+    return createdCustomer;
   }
 
 }

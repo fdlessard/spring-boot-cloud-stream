@@ -18,8 +18,8 @@ import java.io.Serializable;
 @NoArgsConstructor
 public class Address extends BaseEntity implements Serializable {
 
-/*    @Column(name="customer_id")
-    private Long customerId;*/
+    @Column(name="customer_id")
+    private Long customerId;
 
     @NotBlank(message = "number name cannot be blank")
     @Column(name = "number")

@@ -23,7 +23,7 @@ public class AsynchronousCustomerController {
   private CustomerService customerService;
 
   @PostMapping(value = "/asynchronous-customers")
-  @ResponseStatus(HttpStatus.CREATED)
+  @ResponseStatus(HttpStatus.ACCEPTED)
   @ResponseBody
   public void post(@RequestBody Customer customer) {
 
@@ -32,21 +32,21 @@ public class AsynchronousCustomerController {
   }
 
   @PatchMapping(value = "/asynchronous-customers")
-  @ResponseStatus(HttpStatus.CREATED)
+  @ResponseStatus(HttpStatus.ACCEPTED)
   @ResponseBody
   public void patch(@RequestBody Customer customer) {
 
     logger.info("AsynchronousCustomerController.patch(" + customer + ")");
-    customerService.updateCustomer(customer);
+    customerService.updateAsynchronousCustomer(customer);
   }
 
   @PutMapping(value = "/asynchronous-customers")
-  @ResponseStatus(HttpStatus.CREATED)
+  @ResponseStatus(HttpStatus.ACCEPTED)
   @ResponseBody
   public void put(@RequestBody Customer customer) {
 
     logger.info("AsynchronousCustomerController.put(" + customer + ")");
-    customerService.updateCustomer(customer);
+    customerService.updateAsynchronousCustomer(customer);
   }
 
 }

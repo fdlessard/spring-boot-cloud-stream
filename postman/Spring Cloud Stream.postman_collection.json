@@ -48,6 +48,32 @@
 					"response": []
 				},
 				{
+					"name": "Customer 1 with Projection",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/customers/1?projection=customerInlineProjection",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"customers",
+								"1"
+							],
+							"query": [
+								{
+									"key": "projection",
+									"value": "customerInlineProjection"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "All Adresses from main endpoint",
 					"request": {
 						"method": "GET",
@@ -109,7 +135,7 @@
 					"response": []
 				},
 				{
-					"name": "Customer",
+					"name": "Customer 3",
 					"request": {
 						"method": "POST",
 						"header": [],
@@ -137,13 +163,41 @@
 					"response": []
 				},
 				{
-					"name": "Addresse",
+					"name": "Customer with Addresses [Not Working]",
 					"request": {
 						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"number\": \"14\",\r\n    \"street\": \"street-14\",\r\n    \"city\": \"city-14\",\r\n    \"postalCode\": \"postal-code-14\",\r\n    \"province\": \"province-14\",\r\n    \"country\": \"country-14\",\r\n    \"customerId\": 1\r\n}",
+							"raw": "{\r\n    \"lastName\": \"last-name-7\",\r\n    \"firstName\": \"first-name-7\",\r\n    \"company\": \"company-7\",\r\n    \"addresses\": [\r\n        {\r\n            \"number\": \"14\",\r\n            \"street\": \"street-14\",\r\n            \"city\": \"city-14\",\r\n            \"postalCode\": \"postal-code-14\",\r\n            \"province\": \"province-14\",\r\n            \"country\": \"country-14\"\r\n        }\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/customers",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"customers"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Addresse 3",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"number\": \"14\",\r\n    \"street\": \"street-14\",\r\n    \"city\": \"city-14\",\r\n    \"postalCode\": \"postal-code-14\",\r\n    \"province\": \"province-14\",\r\n    \"country\": \"country-14\",\r\n    \"customerId\": 3\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -189,6 +243,64 @@
 								"customers",
 								"1",
 								"addresses"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Customer 3",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"lastName\": \"last-name-3-patch\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/customers/3",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"customers",
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Customer",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"lastName\": \"last-name-3-put\",\r\n    \"firstName\": \"first-name-3-put\",\r\n    \"company\": \"company-3-put\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/customers/3",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"customers",
+								"3"
 							]
 						}
 					},
