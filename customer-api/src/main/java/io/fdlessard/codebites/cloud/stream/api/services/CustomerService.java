@@ -19,6 +19,11 @@ public class CustomerService {
 
   private StreamBridge streamBridge;
 
+  public Customer getCustomer(Long id) {
+    logger.info("CustomerService.getCustomer - {}", id);
+    return customerRepository.findById(id).get();
+  }
+
   public void createAsynchronousCustomer(Customer customer) {
     logger.info("CustomerService.createAsynchronousCustomer - {}", customer);
     logger.info("Sending customer: {}", customer);

@@ -3,6 +3,7 @@ package io.fdlessard.codebites.cloud.stream.api.model;
 import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -39,7 +40,7 @@ public class Customer extends BaseEntity {
       cascade = CascadeType.ALL,
       orphanRemoval = true
   )
-  @JoinColumn(name = "customerId")
+  @JoinColumn(name = "customer_id")
   private Set<Address> addresses;
 
 }
