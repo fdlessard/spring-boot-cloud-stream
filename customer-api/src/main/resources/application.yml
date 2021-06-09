@@ -65,3 +65,6 @@ spring:
         address-out-0:
           contentType: application/json
           destination: addresses
+
+customer:
+  publishingActivated: false
