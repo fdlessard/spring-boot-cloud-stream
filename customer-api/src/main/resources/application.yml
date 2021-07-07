@@ -58,12 +58,12 @@ spring:
     stream:
       kafka:
         binder:
-          brokers: pkc-ld537.ca-central-1.aws.confluent.cloud:9092
+          brokers: ${KAFKA_BROKER}
           configuration:
             security.protocol: SASL_SSL
             ssl.endpoint.identification.algorithm: https
             sasl.mechanism: PLAIN
-            sasl.jaas.config: org.apache.kafka.common.security.plain.PlainLoginModule required username="K77JL34ULR6PZJUD" password="vuDfnWSGH9YmFop9UMlMm+kzIBIM9i3Pq484tlAw4/YzuWcNvmEiqIy3br39IY7a";
+            sasl.jaas.config: ${JAAS_CONFIG}
             request.timeout.ms: 20000
             retry.backoff.ms: 500
       bindings:
@@ -75,6 +75,5 @@ spring:
           contentType: application/json
           destination: addresses
           useNativeEncoding: true
-
 customer:
   publishingActivated: true

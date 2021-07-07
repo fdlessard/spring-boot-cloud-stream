@@ -32,8 +32,6 @@ services:
     image: postgres:13.2
     container_name: spring-boot-cloud-stream-postgres
     hostname: postgres
-    networks:
-      - kafka-net
     ports:
       - 5432:5432
     environment:
