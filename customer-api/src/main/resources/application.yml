@@ -11,7 +11,7 @@ management:
         include: "*"
 
 logging:
-  level.root: INFO
+  level.root: DEBUG
   level.liquibase: INFO
   level.io.fdlessard.codebites.cloud.stream.api: DEBUG
 
@@ -55,16 +55,38 @@ spring:
     default-schema: public
     change-log: classpath:/db/changelog/db.changelog-master.yaml
   kafka:
-    bootstrap-servers: kafka-server:9092
+    properties:
+      sasl:
+        jaas:
+          config: "org.apache.kafka.common.security.plain.PlainLoginModule required username='WNYXPXAYKWCE2D4P' password='gSeNyHIsoYgjoorcWsd51Obx47/0dYser0Y7u31boeYrgkGqbZl0j5gje7HzUI7C';"
+        mechanism: PLAIN
+      bootstrap:
+        servers: pkc-ld537.ca-central-1.aws.confluent.cloud:9092
+      security:
+        protocol:SASL_SSL
   cloud:
     stream:
+#      kafka:
+#        binder:
+#          brokers: pkc-ld537.ca-central-1.aws.confluent.cloud:9092
+#          configuration:
+#            ssl:
+#              endpoint.identification.algorithm: https
+#            sasl:
+#              mechanism: PLAIN
+#              jaas:
+#                config: "org.apache.kafka.common.security.plain.PlainLoginModule required username='WNYXPXAYKWCE2D4P' password='gSeNyHIsoYgjoorcWsd51Obx47/0dYser0Y7u31boeYrgkGqbZl0j5gje7HzUI7C';"
+#            security:
+#              protocol: SASL_SSL
       bindings:
         customer-out-0:
           contentType: application/json
           destination: customers
+          useNativeEncoding: true
         address-out-0:
           contentType: application/json
           destination: addresses
+          useNativeEncoding: true
 
 customer:
-  publishingActivated: false
+  publishingActivated: true

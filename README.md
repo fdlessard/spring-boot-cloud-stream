@@ -19,6 +19,10 @@
 
 - https://docs.spring.io/spring-cloud-stream/docs/current/reference/html/spring-cloud-stream.html#_testing
 
+
+
+- https://www.confluent.io/blog/apache-kafka-spring-cloud-data-flow-tutorial/
+
 - docker-compose build
 - docker-compose up
 
