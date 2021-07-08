@@ -30,13 +30,15 @@ spring:
     time-zone: UTC
     serialization:
       write_dates_as_timestamps: false
+  sql:
+    init:
+      mode: never
+      platform: postgres
   datasource:
     username: ${POSTGRES_USER:postgres}
     password: ${POSTGRES_PASSWORD:secret}
-    platform: postgres
     driverClassName: org.postgresql.Driver
     url: jdbc:postgresql://localhost:5432/postgres
-    initialization-mode: never
   jpa:
     database-platform: org.hibernate.dialect.PostgreSQL10Dialect
     hibernate:
@@ -75,5 +77,6 @@ spring:
           contentType: application/json
           destination: addresses
           useNativeEncoding: true
+
 customer:
   publishingActivated: true
